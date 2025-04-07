@@ -1,0 +1,18 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+
+        {
+            "name": "Launch Postgres container",
+            "type": "go",
+            "request": "launch",
+            "mode": "auto",
+            "program": "${workspaceFolder}/postgres.go",
+            "envFile": "${workspaceFolder}/.env.container.example",
+            "args": [
+                "--container", "container-name",
+                "--port", "5432"
+            ]
+        }
+    ]
+}
