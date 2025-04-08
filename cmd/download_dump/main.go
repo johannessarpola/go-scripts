@@ -51,7 +51,7 @@ func main() {
 		sshDestination:    os.Getenv("SSH_DESTINATION"),
 	}
 
-	to := 6000 * time.Second
+	to := 60 * time.Second
 	ctx, cancel := context.WithTimeout(context.Background(), to)
 	defer cancel()
 	tunnel := configureTunnel(&sshConfig)
