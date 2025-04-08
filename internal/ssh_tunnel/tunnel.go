@@ -31,17 +31,13 @@ func (tunnel *SSHTunnel) Start(ctx context.Context) error {
 	defer listener.Close()
 	tunnel.Local.Port = listener.Addr().(*net.TCPAddr).Port
 	for {
-		select {
-		case <-ctx.Done():
-			return ctx.Err()
-		default:
-			conn, err := listener.Accept()
-			if err != nil {
-				return err
-			}
-			tunnel.logf("accepted connection")
-			go tunnel.forward(conn)
+
+		conn, err := listener.Accept()
+		if err != nil {
+			return err
 		}
+		tunnel.logf("accepted connection")
+		go tunnel.forward(conn)
 	}
 }
 

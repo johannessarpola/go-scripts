@@ -7,6 +7,7 @@ import (
 )
 
 func NewPrivateKey(file string) ssh.AuthMethod {
+	// TODO Return error
 	buffer, err := os.ReadFile(file)
 	if err != nil {
 		return nil
