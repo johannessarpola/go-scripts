@@ -4,3 +4,4 @@ dumps
 !.env.*.example
 .vscode
 .credentials
+.idea
