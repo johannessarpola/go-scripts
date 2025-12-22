@@ -1,24 +1,24 @@
 services:
-  db:
-    image: postgres:16-alpine
-    container_name: ${DB_CONTAINER_NAME:-my_database}
+  postgres:
+    image: ${POSTGRES_IMAGE:-postgres:17}
+    container_name: ${POSTGRES_CONTAINER_NAME:-development-database}
+    environment:
+      POSTGRES_USER: ${DB_USER:-postgres}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-postgres}
+      POSTGRES_DB: postgres
     ports:
       - "${DB_PORT:-0}:5432"
-    environment:
-      POSTGRES_USER: ${POSTGRES_USER:-postgres}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
     volumes:
-      # Mount the initialization script
-      - ./init-scripts:/docker-entrypoint-initdb.d:ro
-      # Mount the data dumps
-      - ./dumps:/data-dump:ro
-      # Persist database data
-      - db_data:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql/data
+      - ./dumps:/docker-entrypoint-initdb.d/dumps:ro
+      - ./init-scripts/init-db.sh:/docker-entrypoint-initdb.d/init-db.sh:ro
+      - ./init-scripts/config.yml:/docker-entrypoint-initdb.d/config.yml:ro
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres}"]
-      interval: 5s
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
       timeout: 5s
       retries: 5
+    
 
 volumes:
-  db_data:
+  postgres_data:

@@ -5,3 +5,7 @@ dumps
 .vscode
 .credentials
 .idea
+**/config.yaml
+**/config.yml
+!**/*_example.yaml
+!**/*_example.yml

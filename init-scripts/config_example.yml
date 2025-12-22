@@ -1,0 +1,4 @@
+extensions:
+  - postgis
+  - pg_trgm
+  - uuid-ossp
